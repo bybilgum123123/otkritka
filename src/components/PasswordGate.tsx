@@ -5,8 +5,9 @@ import { useRouter } from 'next/navigation';
 import { motion, useReducedMotion } from 'motion/react';
 import { Eye, EyeOff, Heart, LockKeyhole, LoaderCircle } from 'lucide-react';
 import Button from './ui/Button';
+import type { gateContent } from '@/content/love';
 
-export default function PasswordGate() {
+export default function PasswordGate({ content: c }: { content: typeof gateContent }) {
   const router = useRouter();
   const reduce = useReducedMotion();
   const input = useRef<HTMLInputElement>(null);
@@ -27,7 +28,7 @@ export default function PasswordGate() {
       });
       const result = await response.json();
       if (!response.ok) {
-        setError(result.error || 'неа, попробуй ещё раз 🤭');
+        setError(result.error || c.wrongPassword);
         setPending(false);
         requestAnimationFrame(() => input.current?.focus());
         return;
@@ -35,22 +36,22 @@ export default function PasswordGate() {
       if (input.current) input.current.value = '';
       setUnlocked(true);
     } catch {
-      setError('Не получилось открыть. Попробуй ещё раз.');
+      setError(c.networkError);
       setPending(false);
     }
   }
 
   return <main className="password-gate">
-    <motion.section className="gate-content" aria-label="Вход в открытку"
+    <motion.section className="gate-content" aria-label={c.label}
       animate={unlocked ? { opacity: 0, y: reduce ? 0 : -8, filter: reduce ? 'none' : 'blur(6px)' } : { opacity: 1, y: 0, filter: 'blur(0px)' }}
       transition={{ duration: reduce ? .15 : .5, ease: [.22, 1, .36, 1] }}
       onAnimationComplete={() => { if (unlocked) router.refresh(); }}
     >
       <span className="gate-heart" aria-hidden="true"><Heart size={27} strokeWidth={1.2} /></span>
-      <h1>сюда только<br />лапули 🤍</h1>
-      <p className="gate-note" id="password-hint">введи секретное словечко</p>
+      <h1>{c.title[0]}<br />{c.title[1]}</h1>
+      <p className="gate-note" id="password-hint">{c.note}</p>
       <form onSubmit={submit} aria-busy={pending}>
-        <label htmlFor="love-password" className="sr-only">Секретное словечко</label>
+        <label htmlFor="love-password" className="sr-only">{c.inputLabel}</label>
         <motion.div className={`password-field ${error ? 'has-error' : ''}`}
           animate={{ x: error && !reduce ? [0, -5, 5, -3, 3, 0] : 0 }}
           transition={{ duration: .35 }}
@@ -62,13 +63,13 @@ export default function PasswordGate() {
             onChange={() => { if (error) setError(''); }}
           />
           <Button tone="icon" className="password-visibility" onClick={() => setVisible(value => !value)}
-            aria-label={visible ? 'Скрыть пароль' : 'Показать пароль'} aria-pressed={visible} title={visible ? 'Скрыть пароль' : 'Показать пароль'}
+            aria-label={visible ? c.hidePassword : c.showPassword} aria-pressed={visible} title={visible ? c.hidePassword : c.showPassword}
           >{visible ? <EyeOff size={20} /> : <Eye size={20} />}</Button>
         </motion.div>
         <div className="gate-error" id="password-error" role="status" aria-live="polite">{error}</div>
         <Button tone="primary" type="submit" className="gate-submit" disabled={pending}>
           {pending ? <LoaderCircle size={18} className="gate-spinner" aria-hidden="true" /> : null}
-          {unlocked ? 'открываю…' : 'открыть открытку'}
+          {unlocked ? c.opening : c.open}
         </Button>
       </form>
     </motion.section>

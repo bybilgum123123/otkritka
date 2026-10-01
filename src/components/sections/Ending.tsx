@@ -14,7 +14,5 @@ export function Surprise({ secret }: { secret: (s: string) => void }) {
 export function FinalMessage({ restart, secret }: { restart: () => void; secret: (s: string) => void }) {
  const c = useLoveContent();
  const count = useRef(0);
- return <footer className="final"><span className="final-note">{c.ui.loveMark}</span><h2>{c.final.title}</h2><p>{c.final.subtitle}</p><span className="signature">— твой {c.sender}</span><Button tone="icon" className="final-heart" aria-label={c.ui.seal} onClick={() => { count.current++; if (count.current >= 3) secret(c.secrets.heart); }}><Heart size={28} strokeWidth={1}/></Button><Button className="restart" onClick={restart}>{c.final.restart}<ArrowUp size={15}/></Button></footer>;
+ return <footer className="final"><span className="final-note">{c.ui.loveMark}</span><h2>{c.final.title}</h2><p>{c.final.subtitle}</p><span className="signature">{c.final.signature}</span><Button tone="icon" className="final-heart" aria-label={c.ui.seal} onClick={() => { count.current++; if (count.current >= 3) secret(c.secrets.heart); }}><Heart size={28} strokeWidth={1}/></Button><Button className="restart" onClick={restart}>{c.final.restart}<ArrowUp size={15}/></Button></footer>;
 }
-
-

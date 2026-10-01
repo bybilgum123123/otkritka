@@ -17,7 +17,7 @@ export default function Letter() {
         <motion.article id="personal-letter" className="paper-letter" aria-hidden={!open} inert={!open} initial={false} animate={{ y: open ? 0 : 24 }} transition={{ duration: reduce ? 0 : .7 }}>
           <span className="letter-mark">{c.ui.letterMark}</span><h3>{c.letter.greeting}</h3>
           {c.letter.paragraphs.map(paragraph => <p key={paragraph}>{paragraph}</p>)}
-          <span className="signature">{c.letter.signature} ♡</span>
+          <span className="signature">{c.letter.signature}</span>
         </motion.article>
       </motion.div>
       <div className="envelope-pocket">

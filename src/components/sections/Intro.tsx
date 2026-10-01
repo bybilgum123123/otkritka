@@ -7,7 +7,7 @@ import Button from '../ui/Button';
 export default function Intro({ open, onOpen, secret }: { open: boolean; onOpen: () => void; secret: (s: string) => void }) {
  const c = useLoveContent();
  const reduce = useReducedMotion();
- return <section className={`intro ${open ? 'is-open' : ''}`} aria-label="Открытка для Лапули">
+ return <section className={`intro ${open ? 'is-open' : ''}`} aria-label={c.ui.introLabel}>
   <div className="intro-top"><span>{c.intro.corner}</span><Button tone="icon" className="tiny-heart" aria-label={c.ui.seal} onClick={() => secret(c.secrets.stamp)}><Heart size={17} strokeWidth={1.5}/></Button></div>
   <motion.div className="intro-photo intro-photo-left" initial={{ opacity: 0, rotate: -14, y: 35 }} animate={{ opacity: open ? 0 : 1, rotate: -11, y: 0 }} transition={{ duration: reduce ? 0 : 1.3, delay: .25 }}><div className="tape"/><div className="intro-photo-image"><Photo index={1} priority/></div><span>{c.photos[1].caption}</span></motion.div>
   <motion.div className="intro-photo intro-photo-right" initial={{ opacity: 0, rotate: 15, y: 35 }} animate={{ opacity: open ? 0 : 1, rotate: 9, y: 0 }} transition={{ duration: reduce ? 0 : 1.3, delay: .4 }}><div className="tape"/><div className="intro-photo-image"><Photo index={0} priority/></div><span>{c.photos[0].caption}</span></motion.div>
@@ -22,5 +22,3 @@ export default function Intro({ open, onOpen, secret }: { open: boolean; onOpen:
   {open && <motion.div className="opening-glow" initial={{ opacity: 0 }} animate={{ opacity: [0, .8, 0] }} transition={{ duration: 1.2 }}/>}
  </section>;
 }
-
-

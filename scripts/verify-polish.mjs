@@ -32,7 +32,7 @@ for (const [width, height] of [[320,568],[360,800],[375,812],[390,844],[393,852]
 }
 
 await page.setViewportSize({ width: 390, height: 844 });
-const phrases = ['твой смех', 'как ты на меня смотришь', 'наши тупые приколы', 'когда ты рядом', 'короче… всю тебя, Масюня.'];
+const phrases = ['твою улыбку', 'наши тупые приколы', 'когда ты рядом', 'как ты меня обнимаешь', 'короче… всю тебя, Масюня.'];
 for (let i = 0; i < phrases.length; i++) {
   await page.locator('.things').evaluate((element, step) => {
     const start = element.getBoundingClientRect().top + scrollY;

@@ -1,12 +1,11 @@
 'use client';
 import { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useMotionValueEvent, useReducedMotion, AnimatePresence } from 'motion/react';
-import { ArrowDown } from 'lucide-react';
 import { useLoveContent } from '@/components/ContentProvider';
 export function LoveMessage() {
  const c = useLoveContent();
  const reduce = useReducedMotion();
- return <section id="message" className="love-message" tabIndex={-1}><span className="small-mark">♡</span><motion.h2 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: reduce ? 0 : 1 }}>{c.message.lead}</motion.h2><motion.div initial={{ opacity: 0, y: reduce ? 0 : 25 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .6 }} transition={{ duration: .9 }}><h3>{c.message.title}</h3><p>{c.message.body}</p></motion.div><span className="scroll-note">{c.message.next}<ArrowDown size={16}/></span></section>;
+ return <section id="message" className="love-message" tabIndex={-1}><span className="small-mark">♡</span><motion.h2 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: reduce ? 0 : 1 }}>{c.message.lead}</motion.h2><motion.div initial={{ opacity: 0, y: reduce ? 0 : 25 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .6 }} transition={{ duration: .9 }}><h3>{c.message.title}</h3><p>{c.message.body}</p></motion.div><span className="scroll-note">{c.message.next}</span></section>;
 }
 export function ThingsILove() {
  const c = useLoveContent();
